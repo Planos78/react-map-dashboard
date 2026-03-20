@@ -9,6 +9,20 @@
 - Ant Design
 - google-map-react + Supercluster
 
+## Features
+
+### แผนที่ (Google Maps)
+- แสดง map กรุงเทพพร้อม markers 65 จุด (40 ยานพาหนะ + 25 จุดส่งของ)
+- Cluster — zoom ออก markers รวมกลุ่มเป็นตัวเลข กดแตกออกได้
+- กด marker แสดง popup รายละเอียด (คนขับ, ทะเบียน, ความเร็ว, ที่อยู่ ฯลฯ)
+- Animations — pulse สำหรับรถ active, bounce ตอนเลือก, cluster หายใจ
+
+### Sidebar
+- ค้นหาด้วยชื่อ, ชื่อคนขับ, ทะเบียน, ที่อยู่
+- Filter ตามประเภท (ยานพาหนะ / จุดส่งของ)
+- Filter ตามสถานะ (Active, Idle, Offline, Open, Closed)
+- กดรายการใน list เพื่อเลือก marker บน map
+
 ## Prerequisites
 
 - Node.js 20.19+ หรือ 22.12+ (project นี้มี `.nvmrc` กำหนดไว้ที่ v22.12.0)
