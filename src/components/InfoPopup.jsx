@@ -1,5 +1,5 @@
-import { Card, Descriptions, Tag, Button } from "antd";
-import { CloseOutlined } from "@ant-design/icons";
+import { Card, Descriptions, Tag, Button, Divider } from "antd";
+import { CloseOutlined, CarOutlined, EnvironmentOutlined, ClockCircleOutlined, DashboardOutlined } from "@ant-design/icons";
 
 const statusConfig = {
   active: { color: "green", label: "Active" },
@@ -9,11 +9,12 @@ const statusConfig = {
   closed: { color: "default", label: "Closed" },
 };
 
-export default function InfoPopup({ item, onClose }) {
+export default function InfoPopup({ item, onClose, showRoute, onToggleRoute, routeInfo }) {
   if (!item) return null;
 
   const isVehicle = item.type === "vehicle";
   const status = statusConfig[item.status] || { color: "default", label: item.status };
+  const hasDestination = isVehicle && item.destination;
 
   return (
     <div style={{ position: "absolute", top: 16, right: 16, zIndex: 20, width: 320 }}>
@@ -50,6 +51,49 @@ export default function InfoPopup({ item, onClose }) {
             </>
           )}
         </Descriptions>
+
+        {hasDestination && (
+          <>
+            <Divider style={{ margin: "12px 0" }} />
+            <div style={{ marginBottom: 8 }}>
+              <EnvironmentOutlined style={{ color: "#4f46e5", marginRight: 6 }} />
+              <span style={{ fontSize: 13, color: "#666" }}>
+                จุดหมาย: <strong>{item.destination.name}</strong>
+              </span>
+            </div>
+            <Button
+              type={showRoute ? "default" : "primary"}
+              icon={<CarOutlined />}
+              block
+              onClick={onToggleRoute}
+            >
+              {showRoute ? "ซ่อนเส้นทาง" : "แสดงเส้นทาง"}
+            </Button>
+
+            {showRoute && routeInfo && (
+              <div
+                style={{
+                  marginTop: 10,
+                  padding: 12,
+                  background: "linear-gradient(135deg, #f0f0ff, #e8e8ff)",
+                  borderRadius: 8,
+                  border: "1px solid #d9d9ff",
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div>
+                    <DashboardOutlined style={{ color: "#4f46e5", marginRight: 6 }} />
+                    <span style={{ fontSize: 13, fontWeight: 600 }}>{routeInfo.distance}</span>
+                  </div>
+                  <div>
+                    <ClockCircleOutlined style={{ color: "#4f46e5", marginRight: 6 }} />
+                    <span style={{ fontSize: 13, fontWeight: 600 }}>{routeInfo.duration}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
+        )}
 
         <div style={{ marginTop: 8, fontSize: 12, color: "#999" }}>
           📍 {item.lat.toFixed(4)}, {item.lng.toFixed(4)}

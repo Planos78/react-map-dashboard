@@ -11,6 +11,7 @@ export default function App() {
   const [filterType, setFilterType] = useState("all");
   const [filterStatus, setFilterStatus] = useState("all");
   const [selectedItem, setSelectedItem] = useState(null);
+  const [showRoute, setShowRoute] = useState(false);
 
   const filteredMarkers = useMemo(() => {
     return allMarkers.filter((item) => {
@@ -29,7 +30,13 @@ export default function App() {
   }, [search, filterType, filterStatus]);
 
   const handleMarkerClick = (item) => {
+    setShowRoute(false);
     setSelectedItem(item.id === selectedItem?.id ? null : item);
+  };
+
+  const handleClose = () => {
+    setShowRoute(false);
+    setSelectedItem(null);
   };
 
   return (
@@ -59,7 +66,9 @@ export default function App() {
             markers={filteredMarkers}
             selectedItem={selectedItem}
             onMarkerClick={handleMarkerClick}
-            onClose={() => setSelectedItem(null)}
+            onClose={handleClose}
+            showRoute={showRoute}
+            onToggleRoute={() => setShowRoute((v) => !v)}
           />
         </Content>
       </Layout>

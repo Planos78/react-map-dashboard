@@ -16,6 +16,20 @@ const plates = [
   "มย", "รล", "วศ", "สห", "อฮ",
 ];
 
+// Fixed destination locations for routes
+const destinations = [
+  { lat: 13.7563, lng: 100.5018, name: "เซ็นทรัลเวิลด์" },
+  { lat: 13.7469, lng: 100.5349, name: "สยามพารากอน" },
+  { lat: 13.7248, lng: 100.4930, name: "ไอคอนสยาม" },
+  { lat: 13.7650, lng: 100.5381, name: "จตุจักร" },
+  { lat: 13.7200, lng: 100.5200, name: "คลองเตย" },
+  { lat: 13.7580, lng: 100.5650, name: "ลาดพร้าว" },
+  { lat: 13.7370, lng: 100.5602, name: "อโศก" },
+  { lat: 13.7178, lng: 100.5147, name: "สาทร" },
+  { lat: 13.7800, lng: 100.5500, name: "บางซื่อ" },
+  { lat: 13.6900, lng: 100.5400, name: "บางนา" },
+];
+
 function randomBetween(min, max) {
   return min + Math.random() * (max - min);
 }
@@ -33,6 +47,7 @@ function generateVehicles(count) {
     const cat = randomPick(categories);
     const prefix = cat === "truck" ? "Truck" : cat === "van" ? "Van" : "Bike";
     const status = randomPick(statuses);
+    const dest = randomPick(destinations);
 
     result.push({
       id: i,
@@ -46,6 +61,7 @@ function generateVehicles(count) {
       driver: randomPick(driverNames),
       plate: `${randomPick(plates)} ${Math.floor(randomBetween(1000, 9999))}`,
       lastUpdate: "2026-03-21 10:30:00",
+      destination: status !== "offline" ? { lat: dest.lat, lng: dest.lng, name: dest.name } : null,
     });
   }
   return result;
