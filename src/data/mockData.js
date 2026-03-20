@@ -1,132 +1,80 @@
-export const vehicles = [
-  {
-    id: 1,
-    name: "Truck-001",
-    type: "vehicle",
-    category: "truck",
-    lat: 13.7563,
-    lng: 100.5018,
-    status: "active",
-    speed: 45,
-    driver: "สมชาย ใจดี",
-    plate: "กข 1234",
-    lastUpdate: "2026-03-21 10:30:00",
-  },
-  {
-    id: 2,
-    name: "Truck-002",
-    type: "vehicle",
-    category: "truck",
-    lat: 13.7469,
-    lng: 100.5349,
-    status: "idle",
-    speed: 0,
-    driver: "สมหญิง รักดี",
-    plate: "คง 5678",
-    lastUpdate: "2026-03-21 10:25:00",
-  },
-  {
-    id: 3,
-    name: "Van-001",
-    type: "vehicle",
-    category: "van",
-    lat: 13.7248,
-    lng: 100.4930,
-    status: "active",
-    speed: 32,
-    driver: "วิชัย สุขสันต์",
-    plate: "จฉ 9012",
-    lastUpdate: "2026-03-21 10:28:00",
-  },
-  {
-    id: 4,
-    name: "Bike-001",
-    type: "vehicle",
-    category: "motorcycle",
-    lat: 13.7650,
-    lng: 100.5381,
-    status: "active",
-    speed: 25,
-    driver: "ประยุทธ์ เร็วดี",
-    plate: "1กก 3456",
-    lastUpdate: "2026-03-21 10:32:00",
-  },
-  {
-    id: 5,
-    name: "Truck-003",
-    type: "vehicle",
-    category: "truck",
-    lat: 13.7367,
-    lng: 100.5608,
-    status: "offline",
-    speed: 0,
-    driver: "มานะ ตั้งใจ",
-    plate: "ขค 7890",
-    lastUpdate: "2026-03-21 09:15:00",
-  },
+const driverNames = [
+  "สมชาย ใจดี", "สมหญิง รักดี", "วิชัย สุขสันต์", "ประยุทธ์ เร็วดี", "มานะ ตั้งใจ",
+  "สมศรี มั่นคง", "วิทยา ก้าวหน้า", "สุภาพ อ่อนโยน", "กิตติ ฉลาด", "อนันต์ แข็งแรง",
+  "พิชัย กล้าหาญ", "สุรีย์ สดใส", "ธนา มั่งมี", "ชัยวัฒน์ รุ่งเรือง", "สมบัติ ดีเลิศ",
+  "ปรีชา เก่งกาจ", "วรรณา สวยงาม", "สุชาติ ขยัน", "อรุณ ทองดี", "มนัส สุขใจ",
 ];
 
-export const deliveryPoints = [
-  {
-    id: 101,
-    name: "คลังสินค้า A",
-    type: "delivery",
-    category: "warehouse",
-    lat: 13.7200,
-    lng: 100.5200,
-    status: "open",
-    address: "123 ถ.พระราม 4 กรุงเทพฯ",
-    contact: "02-123-4567",
-    packages: 45,
-  },
-  {
-    id: 102,
-    name: "จุดส่ง สาทร",
-    type: "delivery",
-    category: "dropoff",
-    lat: 13.7178,
-    lng: 100.5147,
-    status: "open",
-    address: "456 ถ.สาทร กรุงเทพฯ",
-    contact: "02-234-5678",
-    packages: 12,
-  },
-  {
-    id: 103,
-    name: "จุดส่ง สีลม",
-    type: "delivery",
-    category: "dropoff",
-    lat: 13.7262,
-    lng: 100.5347,
-    status: "closed",
-    address: "789 ถ.สีลม กรุงเทพฯ",
-    contact: "02-345-6789",
-    packages: 0,
-  },
-  {
-    id: 104,
-    name: "คลังสินค้า B",
-    type: "delivery",
-    category: "warehouse",
-    lat: 13.7580,
-    lng: 100.5650,
-    status: "open",
-    address: "321 ถ.รัชดาภิเษก กรุงเทพฯ",
-    contact: "02-456-7890",
-    packages: 78,
-  },
-  {
-    id: 105,
-    name: "จุดส่ง อโศก",
-    type: "delivery",
-    category: "dropoff",
-    lat: 13.7370,
-    lng: 100.5602,
-    status: "open",
-    address: "654 ถ.อโศก กรุงเทพฯ",
-    contact: "02-567-8901",
-    packages: 23,
-  },
+const streets = [
+  "ถ.สุขุมวิท", "ถ.สีลม", "ถ.สาทร", "ถ.พระราม 4", "ถ.เพชรบุรี",
+  "ถ.รัชดาภิเษก", "ถ.ลาดพร้าว", "ถ.พหลโยธิน", "ถ.วิภาวดี", "ถ.อโศก",
+  "ถ.เจริญกรุง", "ถ.เยาวราช", "ถ.ราชดำริ", "ถ.วิทยุ", "ถ.นราธิวาส",
 ];
 
+const plates = [
+  "กข", "คง", "จฉ", "ชซ", "ณด", "ตถ", "ทธ", "นบ", "ปผ", "พฟ",
+  "มย", "รล", "วศ", "สห", "อฮ",
+];
+
+function randomBetween(min, max) {
+  return min + Math.random() * (max - min);
+}
+
+function randomPick(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function generateVehicles(count) {
+  const categories = ["truck", "van", "motorcycle"];
+  const statuses = ["active", "active", "active", "idle", "idle", "offline"];
+  const result = [];
+
+  for (let i = 1; i <= count; i++) {
+    const cat = randomPick(categories);
+    const prefix = cat === "truck" ? "Truck" : cat === "van" ? "Van" : "Bike";
+    const status = randomPick(statuses);
+
+    result.push({
+      id: i,
+      name: `${prefix}-${String(i).padStart(3, "0")}`,
+      type: "vehicle",
+      category: cat,
+      lat: randomBetween(13.68, 13.82),
+      lng: randomBetween(100.45, 100.62),
+      status,
+      speed: status === "active" ? Math.floor(randomBetween(15, 80)) : 0,
+      driver: randomPick(driverNames),
+      plate: `${randomPick(plates)} ${Math.floor(randomBetween(1000, 9999))}`,
+      lastUpdate: "2026-03-21 10:30:00",
+    });
+  }
+  return result;
+}
+
+function generateDeliveryPoints(count, startId) {
+  const statuses = ["open", "open", "open", "closed"];
+  const result = [];
+
+  for (let i = 0; i < count; i++) {
+    const isWarehouse = i < 5;
+    const status = randomPick(statuses);
+
+    result.push({
+      id: startId + i,
+      name: isWarehouse ? `คลังสินค้า ${String.fromCharCode(65 + i)}` : `จุดส่ง ${randomPick(streets).replace("ถ.", "")}${i}`,
+      type: "delivery",
+      category: isWarehouse ? "warehouse" : "dropoff",
+      lat: randomBetween(13.68, 13.82),
+      lng: randomBetween(100.45, 100.62),
+      status,
+      address: `${Math.floor(randomBetween(1, 999))} ${randomPick(streets)} กรุงเทพฯ`,
+      contact: `02-${Math.floor(randomBetween(100, 999))}-${Math.floor(randomBetween(1000, 9999))}`,
+      packages: status === "open" ? Math.floor(randomBetween(5, 120)) : 0,
+    });
+  }
+  return result;
+}
+
+export const vehicles = generateVehicles(40);
+export const deliveryPoints = generateDeliveryPoints(25, 1001);
 export const allMarkers = [...vehicles, ...deliveryPoints];

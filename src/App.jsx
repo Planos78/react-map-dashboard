@@ -1,7 +1,10 @@
 import { useState, useMemo } from "react";
+import { ConfigProvider, Layout } from "antd";
 import Sidebar from "./components/Sidebar";
 import MapView from "./components/MapView";
 import { allMarkers } from "./data/mockData";
+
+const { Sider, Content } = Layout;
 
 export default function App() {
   const [search, setSearch] = useState("");
@@ -11,27 +14,16 @@ export default function App() {
 
   const filteredMarkers = useMemo(() => {
     return allMarkers.filter((item) => {
-      // Type filter
       if (filterType !== "all" && item.type !== filterType) return false;
-
-      // Status filter
       if (filterStatus !== "all" && item.status !== filterStatus) return false;
-
-      // Search
       if (search) {
         const q = search.toLowerCase();
-        const searchable = [
-          item.name,
-          item.driver,
-          item.plate,
-          item.address,
-        ]
+        const searchable = [item.name, item.driver, item.plate, item.address]
           .filter(Boolean)
           .join(" ")
           .toLowerCase();
         if (!searchable.includes(q)) return false;
       }
-
       return true;
     });
   }, [search, filterType, filterStatus]);
@@ -41,24 +33,36 @@ export default function App() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <Sidebar
-        search={search}
-        onSearchChange={setSearch}
-        filterType={filterType}
-        onFilterTypeChange={setFilterType}
-        filterStatus={filterStatus}
-        onFilterStatusChange={setFilterStatus}
-        markers={filteredMarkers}
-        onMarkerClick={handleMarkerClick}
-        selectedId={selectedItem?.id}
-      />
-      <MapView
-        markers={filteredMarkers}
-        selectedItem={selectedItem}
-        onMarkerClick={handleMarkerClick}
-        onClose={() => setSelectedItem(null)}
-      />
-    </div>
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: "#4f46e5",
+        },
+      }}
+    >
+      <Layout style={{ height: "100vh" }}>
+        <Sider width={320} theme="light" style={{ borderRight: "1px solid #f0f0f0" }}>
+          <Sidebar
+            search={search}
+            onSearchChange={setSearch}
+            filterType={filterType}
+            onFilterTypeChange={setFilterType}
+            filterStatus={filterStatus}
+            onFilterStatusChange={setFilterStatus}
+            markers={filteredMarkers}
+            onMarkerClick={handleMarkerClick}
+            selectedId={selectedItem?.id}
+          />
+        </Sider>
+        <Content>
+          <MapView
+            markers={filteredMarkers}
+            selectedItem={selectedItem}
+            onMarkerClick={handleMarkerClick}
+            onClose={() => setSelectedItem(null)}
+          />
+        </Content>
+      </Layout>
+    </ConfigProvider>
   );
 }

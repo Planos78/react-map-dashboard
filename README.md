@@ -1,16 +1,41 @@
-# React + Vite
+# React Map Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+แดชบอร์ดแผนที่สำหรับติดตามยานพาหนะและจุดส่งของ แสดงผลบน Google Maps
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19
+- Vite 8
+- Ant Design
+- google-map-react + Supercluster
 
-## React Compiler
+## Prerequisites
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js 20.19+ หรือ 22.12+ (project นี้มี `.nvmrc` กำหนดไว้ที่ v22.12.0)
 
-## Expanding the ESLint configuration
+ถ้าใช้ nvm สามารถสลับ version ได้ด้วย:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+nvm use
+```
+
+## Getting Started
+
+```bash
+# ติดตั้ง dependencies
+npm install
+
+# รัน dev server
+npm run dev
+```
+
+เปิดเบราว์เซอร์ไปที่ http://localhost:5173
+
+## Scripts
+
+| คำสั่ง | รายละเอียด |
+| --- | --- |
+| `npm run dev` | รัน dev server |
+| `npm run build` | build สำหรับ production |
+| `npm run preview` | preview production build |
+| `npm run lint` | ตรวจสอบ code ด้วย ESLint |
